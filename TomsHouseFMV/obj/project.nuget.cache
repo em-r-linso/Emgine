@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "Yg2Yp49FNAYd92A7nA279WYQrqSMxKusl5o/2JrrUqguz+ceZp/X5PeNLmet/TrdJG3T0qveyvFX+H+fEH1vgw==",
+  "success": true,
+  "projectFilePath": "D:\\GitHub\\Emgine\\TomsHouseFMV\\TomsHouseFMV.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\boiss\\.nuget\\packages\\raylib-cs\\6.0.0\\raylib-cs.6.0.0.nupkg.sha512",
+    "C:\\Users\\boiss\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}

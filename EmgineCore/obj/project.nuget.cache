@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "z2q5gA50c/vOYwWkbCRXyXrcWGD/YG/j+/Dg/0+yJv/EmJTyqKH/ZViWZe3C08nseCxWyO0U+c/Svt6wkzYRJg==",
+  "success": true,
+  "projectFilePath": "D:\\GitHub\\Emgine\\EmgineCore\\EmgineCore.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\boiss\\.nuget\\packages\\raylib-cs\\6.0.0\\raylib-cs.6.0.0.nupkg.sha512",
+    "C:\\Users\\boiss\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}
