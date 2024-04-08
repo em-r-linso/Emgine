@@ -9,6 +9,7 @@ public class Game
 	string 		WindowName { get; set; }
 	Camera          Camera     { get; set; } = new();
 	List<IDrawable> Drawables  { get; }      = new();
+	List<IUpdatable> Updatables { get; }      = new();
 
 	public Game(Vector2 windowSize, string windowName)
 	{
@@ -59,6 +60,10 @@ public class Game
 
 	void OnUpdate()
 	{
+		foreach (var updatable in Updatables)
+		{
+			updatable.Update();
+		}
 	}
 
 	void OnResize()
@@ -74,10 +79,15 @@ public class Game
 			OnResize();
 		}
 	}
-	
+
 	public void AddDrawable(IDrawable drawable)
 	{
 		Drawables.Add(drawable);
 		Drawables.Sort((a, b) => a.DrawOrder.CompareTo(b.DrawOrder));
+	}
+
+	public void AddUpdatable(IUpdatable updatable)
+	{
+		Updatables.Add(updatable);
 	}
 }

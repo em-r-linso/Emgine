@@ -8,10 +8,10 @@ public class Polygon : Shape
 	public Polygon(IReadOnlyList<Vector2> points, Color? fillColor = null, Color? edgeColor = null, int drawOrder = 0)
 		: base(fillColor, edgeColor, drawOrder)
 	{
-		Points = points.Append(points[0]).ToArray(); // first point added to end to close polygon
+		Points = points.Append(points[0]).ToArray();
 	}
 
-	Vector2[] Points { get; }
+	protected Vector2[] Points { get; set; }
 
 	protected override void DrawFill()
 	{
@@ -21,5 +21,14 @@ public class Polygon : Shape
 	protected override void DrawEdge()
 	{
 		Raylib.DrawLineStrip(Points, Points.Length, EdgeColor!.Value);
+	}
+
+	/// <summary>
+	///     Ensures that the polygon is closed by welding the last point to the first point.
+	///     This should be called whenever the points are modified.
+	/// </summary>
+	protected void WeldEndpoints()
+	{
+		Points[^1] = Points[0];
 	}
 }
