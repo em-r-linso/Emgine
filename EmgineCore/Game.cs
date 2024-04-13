@@ -16,12 +16,11 @@ public class Game
 	Vector2         WindowSize { get; set; }
 	string          WindowName { get; }
 	Camera          Camera     { get; set; } = new();
-	List<GameState> ActiveStates { get; }      = new();
+	GameStateManager GameStateManager { get; } = new();
 
 	public void Start(GameState initialState)
 	{
-		ActiveStates.Add(initialState);
-		ActiveStates.Last().Enter();
+		GameStateManager.AddState(initialState);
 
 		while (!Raylib.WindowShouldClose())
 		{
@@ -50,12 +49,7 @@ public class Game
 
 		Camera.Use();
 
-		//TODO: optimize by maintaining a sorted list of drawables
-		var drawables = ActiveStates
-					   .SelectMany(state => state.Drawables)
-					   .OrderBy(drawable => drawable.DrawOrder);
-
-		foreach (var drawable in drawables)
+		foreach (var drawable in GameStateManager.Drawables)
 		{
 			drawable.Draw();
 		}
@@ -67,9 +61,7 @@ public class Game
 
 	void OnUpdate()
 	{
-		var updatables = ActiveStates.SelectMany(state => state.Updatables);
-
-		foreach (var updatable in updatables)
+		foreach (var updatable in GameStateManager.Updatables)
 		{
 			updatable.Update();
 		}
