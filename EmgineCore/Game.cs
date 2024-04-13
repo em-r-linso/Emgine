@@ -5,22 +5,24 @@ namespace EmgineCore;
 
 public class Game
 {
-	Vector2         WindowSize { get; set; }
-	string 		WindowName { get; set; }
-	Camera          Camera     { get; set; } = new();
-	List<IDrawable> Drawables  { get; }      = new();
-	List<IUpdatable> Updatables { get; }      = new();
-
 	public Game(Vector2 windowSize, string windowName)
 	{
 		WindowSize = windowSize;
 		WindowName = windowName;
-		
+
 		OnLoad();
 	}
 
-	public void Start()
+	Vector2         WindowSize { get; set; }
+	string          WindowName { get; }
+	Camera          Camera     { get; set; } = new();
+	List<GameState> ActiveStates { get; }      = new();
+
+	public void Start(GameState initialState)
 	{
+		ActiveStates.Add(initialState);
+		ActiveStates.Last().Enter();
+
 		while (!Raylib.WindowShouldClose())
 		{
 			HandleEvents();
@@ -48,7 +50,12 @@ public class Game
 
 		Camera.Use();
 
-		foreach (var drawable in Drawables)
+		//TODO: optimize by maintaining a sorted list of drawables
+		var drawables = ActiveStates
+					   .SelectMany(state => state.Drawables)
+					   .OrderBy(drawable => drawable.DrawOrder);
+
+		foreach (var drawable in drawables)
 		{
 			drawable.Draw();
 		}
@@ -60,7 +67,9 @@ public class Game
 
 	void OnUpdate()
 	{
-		foreach (var updatable in Updatables)
+		var updatables = ActiveStates.SelectMany(state => state.Updatables);
+
+		foreach (var updatable in updatables)
 		{
 			updatable.Update();
 		}
@@ -78,16 +87,5 @@ public class Game
 		{
 			OnResize();
 		}
-	}
-
-	public void AddDrawable(IDrawable drawable)
-	{
-		Drawables.Add(drawable);
-		Drawables.Sort((a, b) => a.DrawOrder.CompareTo(b.DrawOrder));
-	}
-
-	public void AddUpdatable(IUpdatable updatable)
-	{
-		Updatables.Add(updatable);
 	}
 }
