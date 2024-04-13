@@ -1,2 +1,10 @@
-*/bin
-.idea
+# builds
+bin/
+obj/
+
+# IntelliJ
+.idea/
+*.DotSettings.user
+
+# NuGet
+*.nupkg
