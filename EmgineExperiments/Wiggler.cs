@@ -2,7 +2,7 @@ using System.Numerics;
 using EmgineCore;
 using Raylib_cs;
 
-namespace TomsHouseFMV;
+namespace EmgineExperiments;
 
 public class Wiggler : Polygon, IUpdatable
 {
@@ -23,12 +23,12 @@ public class Wiggler : Polygon, IUpdatable
 		{
 			var point = Points[pointIndex];
 			point = new(point.X += Raylib.GetRandomValue(-1, 1), point.Y += Raylib.GetRandomValue(-1, 1));
-			if(Vector2.Distance(point, OriginalPoints[pointIndex]) > maxDistance)
+			if (Vector2.Distance(point, OriginalPoints[pointIndex]) > maxDistance)
 			{
 				var direction = Vector2.Normalize(point - OriginalPoints[pointIndex]);
 				point = OriginalPoints[pointIndex] + direction * maxDistance;
 			}
-			
+
 			Points[pointIndex] = point;
 		}
 

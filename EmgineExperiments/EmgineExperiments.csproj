@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EmgineCore\EmgineCore.csproj" />
+        <ProjectReference Include="..\EmgineCore\EmgineCore.csproj"/>
     </ItemGroup>
 
 </Project>
