@@ -1,6 +1,4 @@
-using System.Numerics;
 using EmgineCore;
-using Raylib_cs;
 
 namespace EmgineExperiments;
 
@@ -12,35 +10,47 @@ public class ClickableThing : IMouseable
 	}
 
 	public Shape MouseableArea { get; set; }
-	public bool  Hovered       { get; set; }
 
+	// hovering events
 	public void OnMouseEnter()
 	{
-		MouseableArea.FillColor = Color.Red;
+		Console.WriteLine("OnMouseEnter" + MouseableArea.FillColor);
 	}
 
 	public void OnMouseExit()
 	{
-		MouseableArea.FillColor = Color.Green;
+		Console.WriteLine("OnMouseExit" + MouseableArea.FillColor);
 	}
 
+	// left clicking events
 	public void OnLeftClick()
 	{
-		MouseableArea.EdgeColor = Color.Blue;
+		Console.WriteLine("OnLeftClick" + MouseableArea.FillColor);
 	}
-	
+
+	public void OnLeftHold()
+	{
+		Console.WriteLine("OnLeftHold" + MouseableArea.FillColor);
+	}
+
 	public void OnLeftRelease()
 	{
-		MouseableArea.EdgeColor = Color.White;
+		Console.WriteLine("OnLeftRelease" + MouseableArea.FillColor);
 	}
-	
+
+	// right clicking events
 	public void OnRightClick()
 	{
-		MouseableArea.EdgeColor = Color.Purple;
+		Console.WriteLine("OnRightClick" + MouseableArea.FillColor);
+	}
+
+	public void OnRightHold()
+	{
+		Console.WriteLine("OnRightHold" + MouseableArea.FillColor);
 	}
 
 	public void OnRightRelease()
 	{
-		MouseableArea.EdgeColor = Color.White;
+		Console.WriteLine("OnRightRelease" + MouseableArea.FillColor);
 	}
 }

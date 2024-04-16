@@ -13,10 +13,13 @@ public class Game
 		OnLoad();
 	}
 
-	Vector2          WindowSize       { get; set; }
-	string           WindowName       { get; }
-	Camera           Camera           { get; set; } = new();
-	GameStateManager GameStateManager { get; }      = new();
+	Vector2          WindowSize                    { get; set; }
+	string           WindowName                    { get; }
+	Camera           Camera                        { get; set; } = new();
+	GameStateManager GameStateManager              { get; }      = new();
+	IMouseable?      CurrentMouseHoverTarget       { get; set; }
+	IMouseable?      CurrentMouseLeftButtonTarget  { get; set; }
+	IMouseable?      CurrentMouseRightButtonTarget { get; set; }
 
 	public void Start(GameState initialState)
 	{
@@ -91,17 +94,37 @@ public class Game
 		var mouseLeftUp    = Raylib.IsMouseButtonReleased(MouseButton.Left);
 		var mouseRightUp   = Raylib.IsMouseButtonReleased(MouseButton.Right);
 
+		// mouse exit
+		if (CurrentMouseHoverTarget != null)
+		{
+			if (!CurrentMouseHoverTarget.IsMouseOver(mousePosition))
+			{
+				CurrentMouseHoverTarget.OnMouseExit();
+				CurrentMouseHoverTarget = null;
+			}
+		}
+
+		// mouseover events (enter, click, exit if behind)
 		foreach (var mouseable in GameStateManager.Mouseables)
 		{
 			var isMouseOver = mouseable.MouseableArea.Contains(mousePosition);
 
 			if (isMouseOver)
 			{
-				if (!mouseable.Hovered)
+				// if this is already the current hover target, there's no need to do anything
+				if (CurrentMouseHoverTarget == mouseable)
 				{
-					mouseable.Hovered = true;
-					mouseable.OnMouseEnter();
+					break;
 				}
+				
+				// if the current hover target is behind this element, exit it
+				if (CurrentMouseHoverTarget != null)
+				{
+					mouseable.OnMouseExit();
+				}
+
+				CurrentMouseHoverTarget = mouseable;
+				mouseable.OnMouseEnter();
 
 				if (mouseLeftDown)
 				{
@@ -112,24 +135,48 @@ public class Game
 				{
 					mouseable.OnRightClick();
 				}
+
+				break;
 			}
-			else
+		}
+
+		// click
+		if (CurrentMouseHoverTarget != null)
+		{
+			if (mouseLeftDown)
 			{
-				if (mouseable.Hovered)
-				{
-					mouseable.Hovered = false;
-					mouseable.OnMouseExit();
-				}
+				CurrentMouseLeftButtonTarget = CurrentMouseHoverTarget;
+				CurrentMouseLeftButtonTarget.OnLeftClick();
 			}
+
+			if (mouseRightDown)
+			{
+				CurrentMouseRightButtonTarget = CurrentMouseHoverTarget;
+				CurrentMouseRightButtonTarget.OnRightClick();
+			}
+		}
+
+		// left hold and release
+		if (CurrentMouseLeftButtonTarget != null)
+		{
+			CurrentMouseLeftButtonTarget.OnLeftHold();
 
 			if (mouseLeftUp)
 			{
-				mouseable.OnLeftRelease();
+				CurrentMouseLeftButtonTarget.OnLeftRelease();
+				CurrentMouseLeftButtonTarget = null;
 			}
+		}
+
+		// right hold and release
+		if (CurrentMouseRightButtonTarget != null)
+		{
+			CurrentMouseRightButtonTarget.OnRightHold();
 
 			if (mouseRightUp)
 			{
-				mouseable.OnRightRelease();
+				CurrentMouseRightButtonTarget.OnRightRelease();
+				CurrentMouseRightButtonTarget = null;
 			}
 		}
 	}

@@ -1,9 +1,15 @@
+using System.Numerics;
+
 namespace EmgineCore;
 
 public interface IMouseable
 {
-	public Shape MouseableArea { get; set; }
-	bool         Hovered       { get; set; }
+	Shape MouseableArea { get; set; }
+
+	public bool IsMouseOver(Vector2 mousePosition)
+	{
+		return MouseableArea.Contains(mousePosition);
+	}
 
 	// hovering events
 	public void OnMouseEnter()
@@ -19,12 +25,20 @@ public interface IMouseable
 	{
 	}
 
+	public void OnLeftHold()
+	{
+	}
+
 	public void OnLeftRelease()
 	{
 	}
 
 	// right clicking events
 	public void OnRightClick()
+	{
+	}
+
+	public void OnRightHold()
 	{
 	}
 

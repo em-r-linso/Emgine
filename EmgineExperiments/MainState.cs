@@ -18,10 +18,12 @@ public class MainState : GameState
 		// 						   Color.Red);
 		// AddDrawable(triangle);
 
-		var rectangle      = new Rectangle(0, 0, 50, 50, Color.Green, Color.White);
-		var clickableThing = new ClickableThing(rectangle);
-		AddDrawable(clickableThing.MouseableArea);
-		AddMouseable(clickableThing);
+		var clickableThingA = new ClickableThing(new Rectangle(0, 0, 50, 50, Color.Green, Color.White));
+		AddDrawable(clickableThingA.MouseableArea);
+		AddMouseable(clickableThingA);
+		var clickableThingB = new ClickableThing(new Rectangle(-25, -25, 50, 50, Color.Blue, Color.White));
+		AddDrawable(clickableThingB.MouseableArea);
+		AddMouseable(clickableThingB);
 
 		// var wiggler = new Wiggler(new Vector2[]
 		// 						  {
