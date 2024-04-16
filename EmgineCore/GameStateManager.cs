@@ -65,9 +65,19 @@ public class GameStateManager
 		Updatables.Remove(updatable);
 	}
 
+	/// <summary>
+	///		Inserts a mouseable based on its DrawOrder using a binary search.
+	/// </summary>
+	/// <param name="mouseable"></param>
 	public void AddMouseable(IMouseable mouseable)
 	{
-		Mouseables.Add(mouseable);
+		var index = Mouseables.BinarySearch(mouseable, new MouseableComparer());
+		if (index < 0)
+		{
+			index = ~index;
+		}
+
+		Mouseables.Insert(index, mouseable);
 	}
 
 	public void RemoveMouseable(IMouseable mouseable)
@@ -76,6 +86,9 @@ public class GameStateManager
 	}
 }
 
+/// <summary>
+///		Sorts drawables based on their DrawOrder, with lower values coming first.
+/// </summary>
 public class DrawableComparer : IComparer<IDrawable>
 {
 	public int Compare(IDrawable? x, IDrawable? y)
@@ -86,5 +99,21 @@ public class DrawableComparer : IComparer<IDrawable>
 		}
 
 		return x.DrawOrder.CompareTo(y.DrawOrder);
+	}
+}
+
+/// <summary>
+///		Sorts mouseables based on their DrawOrder, with higher values coming first.
+/// </summary>
+public class MouseableComparer : IComparer<IMouseable>
+{
+	public int Compare(IMouseable? x, IMouseable? y)
+	{
+		if (x == null || y == null)
+		{
+			return 0;
+		}
+
+		return y.MouseableArea.DrawOrder.CompareTo(x.MouseableArea.DrawOrder);
 	}
 }

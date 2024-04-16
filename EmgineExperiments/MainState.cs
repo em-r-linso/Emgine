@@ -18,10 +18,10 @@ public class MainState : GameState
 		// 						   Color.Red);
 		// AddDrawable(triangle);
 
-		var clickableThingA = new ClickableThing(new Rectangle(0, 0, 50, 50, Color.Green, Color.White));
+		var clickableThingA = new ClickableThing(new Rectangle(0, 0, 50, 50, Color.Green, Color.White, 100));
 		AddDrawable(clickableThingA.MouseableArea);
 		AddMouseable(clickableThingA);
-		var clickableThingB = new ClickableThing(new Rectangle(-25, -25, 50, 50, Color.Blue, Color.White));
+		var clickableThingB = new ClickableThing(new Rectangle(-25, -25, 50, 50, Color.Blue, Color.White, 10));
 		AddDrawable(clickableThingB.MouseableArea);
 		AddMouseable(clickableThingB);
 
