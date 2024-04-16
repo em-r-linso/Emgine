@@ -1,4 +1,5 @@
-﻿using Raylib_cs;
+﻿using System.Numerics;
+using Raylib_cs;
 
 namespace EmgineCore;
 
@@ -8,14 +9,14 @@ namespace EmgineCore;
 /// </summary>
 public abstract class Shape : IDrawable
 {
-	protected Color? EdgeColor;
-	protected Color? FillColor;
+	public Color? EdgeColor;
+	public Color? FillColor;
 
 	protected Shape(Color? fillColor = null, Color? edgeColor = null, int drawOrder = 0)
 	{
 		FillColor = fillColor;
 		EdgeColor = edgeColor;
-		DrawOrder     = drawOrder;
+		DrawOrder = drawOrder;
 	}
 
 	public int   DrawOrder    { get; set; }
@@ -36,4 +37,5 @@ public abstract class Shape : IDrawable
 
 	protected abstract void DrawFill();
 	protected abstract void DrawEdge();
+	public abstract    bool Contains(Vector2 point);
 }

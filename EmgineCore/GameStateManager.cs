@@ -5,29 +5,30 @@ public class GameStateManager
 	List<GameState> ActiveStates { get; } = new();
 	List<GameState> FrozenStates { get; } = new();
 
-	public List<IDrawable>    Drawables  { get; } = new();
+	public List<IDrawable>  Drawables  { get; } = new();
 	public List<IUpdatable> Updatables { get; } = new();
-	
+	public List<IMouseable> Mouseables { get; } = new();
+
 	public void AddState(GameState state)
 	{
 		state.Parent = this;
 		ActiveStates.Add(state);
 		state.Enter();
 	}
-	
+
 	public void RemoveState(GameState state)
 	{
 		ActiveStates.Remove(state);
 		state.Exit();
 	}
-	
+
 	public void FreezeState(GameState state)
 	{
 		ActiveStates.Remove(state);
 		FrozenStates.Add(state);
 		state.Freeze();
 	}
-	
+
 	public void UnfreezeState(GameState state)
 	{
 		FrozenStates.Remove(state);
@@ -36,7 +37,7 @@ public class GameStateManager
 	}
 
 	/// <summary>
-	/// Inserts a drawable based on its DrawOrder using a binary search.
+	///     Inserts a drawable based on its DrawOrder using a binary search.
 	/// </summary>
 	public void AddDrawable(IDrawable drawable)
 	{
@@ -45,6 +46,7 @@ public class GameStateManager
 		{
 			index = ~index;
 		}
+
 		Drawables.Insert(index, drawable);
 	}
 
@@ -62,6 +64,16 @@ public class GameStateManager
 	{
 		Updatables.Remove(updatable);
 	}
+
+	public void AddMouseable(IMouseable mouseable)
+	{
+		Mouseables.Add(mouseable);
+	}
+
+	public void RemoveMouseable(IMouseable mouseable)
+	{
+		Mouseables.Remove(mouseable);
+	}
 }
 
 public class DrawableComparer : IComparer<IDrawable>
@@ -72,6 +84,7 @@ public class DrawableComparer : IComparer<IDrawable>
 		{
 			return 0;
 		}
+
 		return x.DrawOrder.CompareTo(y.DrawOrder);
 	}
 }

@@ -1,11 +1,18 @@
-﻿using Raylib_cs;
+﻿using System.Numerics;
+using Raylib_cs;
 using Color = Raylib_cs.Color;
 
 namespace EmgineCore;
 
 public class Rectangle : Shape
 {
-	public Rectangle(int x, int y, int width, int height, Color? fillColor = null, Color? edgeColor = null, int drawOrder = 0)
+	public Rectangle(int    x,
+					 int    y,
+					 int    width,
+					 int    height,
+					 Color? fillColor = null,
+					 Color? edgeColor = null,
+					 int    drawOrder = 0)
 		: base(fillColor, edgeColor, drawOrder)
 	{
 		Rect = new(x, y, width, height);
@@ -27,5 +34,13 @@ public class Rectangle : Shape
 	protected override void DrawEdge()
 	{
 		Raylib.DrawRectangleLines((int)Rect.X, (int)Rect.Y, (int)Rect.Width, (int)Rect.Height, EdgeColor!.Value);
+	}
+
+	public override bool Contains(Vector2 point)
+	{
+		return point.X >= Rect.X              &&
+			   point.X <= Rect.X + Rect.Width &&
+			   point.Y >= Rect.Y              &&
+			   point.Y <= Rect.Y + Rect.Height;
 	}
 }

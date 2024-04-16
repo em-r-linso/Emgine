@@ -29,4 +29,9 @@ public class Camera
 	{
 		Raylib.EndMode2D();
 	}
+
+	public Vector2 GetScreenToWorld(Vector2 screenPosition)
+	{
+		return Raylib.GetScreenToWorld2D(screenPosition, Camera2D);
+	}
 }

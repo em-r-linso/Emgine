@@ -13,10 +13,10 @@ public class Game
 		OnLoad();
 	}
 
-	Vector2         WindowSize { get; set; }
-	string          WindowName { get; }
-	Camera          Camera     { get; set; } = new();
-	GameStateManager GameStateManager { get; } = new();
+	Vector2          WindowSize       { get; set; }
+	string           WindowName       { get; }
+	Camera           Camera           { get; set; } = new();
+	GameStateManager GameStateManager { get; }      = new();
 
 	public void Start(GameState initialState)
 	{
@@ -78,6 +78,59 @@ public class Game
 		if (Raylib.IsWindowResized())
 		{
 			OnResize();
+		}
+
+		HandleMouseEvents();
+	}
+
+	void HandleMouseEvents()
+	{
+		var mousePosition  = Camera.GetScreenToWorld(Raylib.GetMousePosition());
+		var mouseLeftDown  = Raylib.IsMouseButtonPressed(MouseButton.Left);
+		var mouseRightDown = Raylib.IsMouseButtonPressed(MouseButton.Right);
+		var mouseLeftUp    = Raylib.IsMouseButtonReleased(MouseButton.Left);
+		var mouseRightUp   = Raylib.IsMouseButtonReleased(MouseButton.Right);
+
+		foreach (var mouseable in GameStateManager.Mouseables)
+		{
+			var isMouseOver = mouseable.MouseableArea.Contains(mousePosition);
+
+			if (isMouseOver)
+			{
+				if (!mouseable.Hovered)
+				{
+					mouseable.Hovered = true;
+					mouseable.OnMouseEnter();
+				}
+
+				if (mouseLeftDown)
+				{
+					mouseable.OnLeftClick();
+				}
+
+				if (mouseRightDown)
+				{
+					mouseable.OnRightClick();
+				}
+			}
+			else
+			{
+				if (mouseable.Hovered)
+				{
+					mouseable.Hovered = false;
+					mouseable.OnMouseExit();
+				}
+			}
+
+			if (mouseLeftUp)
+			{
+				mouseable.OnLeftRelease();
+			}
+
+			if (mouseRightUp)
+			{
+				mouseable.OnRightRelease();
+			}
 		}
 	}
 }
