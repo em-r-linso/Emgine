@@ -13,13 +13,11 @@ public class Game
 		OnLoad();
 	}
 
-	Vector2          WindowSize                    { get; set; }
-	string           WindowName                    { get; }
-	Camera           Camera                        { get; set; } = new();
-	GameStateManager GameStateManager              { get; }      = new();
-	IMouseable?      CurrentMouseHoverTarget       { get; set; }
-	IMouseable?      CurrentMouseLeftButtonTarget  { get; set; }
-	IMouseable?      CurrentMouseRightButtonTarget { get; set; }
+	Vector2          WindowSize       { get; set; }
+	string           WindowName       { get; }
+	Camera           Camera           { get; set; } = null!;
+	GameStateManager GameStateManager { get; }      = new();
+	MouseManager     MouseManager     { get; set; } = null!;
 
 	public void Start(GameState initialState)
 	{
@@ -43,6 +41,8 @@ public class Game
 
 		Camera = new();
 		Camera.SetOffset(WindowSize / 2);
+
+		MouseManager = new(Camera, GameStateManager);
 	}
 
 	void OnDraw()
@@ -83,91 +83,6 @@ public class Game
 			OnResize();
 		}
 
-		HandleMouseEvents();
-	}
-
-	void HandleMouseEvents()
-	{
-		var mousePosition  = Camera.GetScreenToWorld(Raylib.GetMousePosition());
-		var mouseLeftDown  = Raylib.IsMouseButtonPressed(MouseButton.Left);
-		var mouseRightDown = Raylib.IsMouseButtonPressed(MouseButton.Right);
-		var mouseLeftUp    = Raylib.IsMouseButtonReleased(MouseButton.Left);
-		var mouseRightUp   = Raylib.IsMouseButtonReleased(MouseButton.Right);
-
-		// mouse exit
-		if (CurrentMouseHoverTarget != null)
-		{
-			if (!CurrentMouseHoverTarget.IsMouseOver(mousePosition))
-			{
-				CurrentMouseHoverTarget.OnMouseExit();
-				CurrentMouseHoverTarget = null;
-			}
-		}
-
-		// mouseover events (enter, click, exit if behind)
-		foreach (var mouseable in GameStateManager.Mouseables)
-		{
-			var isMouseOver = mouseable.MouseableArea.Contains(mousePosition);
-
-			if (isMouseOver)
-			{
-				// if this is already the current hover target, there's no need to do anything
-				if (CurrentMouseHoverTarget == mouseable)
-				{
-					break;
-				}
-				
-				// if the current hover target is behind this element, exit it
-				if (CurrentMouseHoverTarget != null)
-				{
-					mouseable.OnMouseExit();
-				}
-
-				CurrentMouseHoverTarget = mouseable;
-				mouseable.OnMouseEnter();
-
-				break;
-			}
-		}
-
-		// click
-		if (CurrentMouseHoverTarget != null)
-		{
-			if (mouseLeftDown)
-			{
-				CurrentMouseLeftButtonTarget = CurrentMouseHoverTarget;
-				CurrentMouseLeftButtonTarget.OnLeftClick();
-			}
-
-			if (mouseRightDown)
-			{
-				CurrentMouseRightButtonTarget = CurrentMouseHoverTarget;
-				CurrentMouseRightButtonTarget.OnRightClick();
-			}
-		}
-
-		// left hold and release
-		if (CurrentMouseLeftButtonTarget != null)
-		{
-			CurrentMouseLeftButtonTarget.OnLeftHold();
-
-			if (mouseLeftUp)
-			{
-				CurrentMouseLeftButtonTarget.OnLeftRelease();
-				CurrentMouseLeftButtonTarget = null;
-			}
-		}
-
-		// right hold and release
-		if (CurrentMouseRightButtonTarget != null)
-		{
-			CurrentMouseRightButtonTarget.OnRightHold();
-
-			if (mouseRightUp)
-			{
-				CurrentMouseRightButtonTarget.OnRightRelease();
-				CurrentMouseRightButtonTarget = null;
-			}
-		}
+		MouseManager.HandleMouseEvents();
 	}
 }
