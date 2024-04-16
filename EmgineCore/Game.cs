@@ -126,16 +126,6 @@ public class Game
 				CurrentMouseHoverTarget = mouseable;
 				mouseable.OnMouseEnter();
 
-				if (mouseLeftDown)
-				{
-					mouseable.OnLeftClick();
-				}
-
-				if (mouseRightDown)
-				{
-					mouseable.OnRightClick();
-				}
-
 				break;
 			}
 		}
