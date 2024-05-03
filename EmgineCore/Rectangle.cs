@@ -36,11 +36,11 @@ public class Rectangle : Shape
 		Raylib.DrawRectangleLines((int)Rect.X, (int)Rect.Y, (int)Rect.Width, (int)Rect.Height, EdgeColor!.Value);
 	}
 
-	public override bool Contains(Vector2 point)
+	public override bool Contains(Vector2 testPoint)
 	{
-		return point.X >= Rect.X              &&
-			   point.X <= Rect.X + Rect.Width &&
-			   point.Y >= Rect.Y              &&
-			   point.Y <= Rect.Y + Rect.Height;
+		return testPoint.X >= Rect.X              &&
+			   testPoint.X <= Rect.X + Rect.Width &&
+			   testPoint.Y >= Rect.Y              &&
+			   testPoint.Y <= Rect.Y + Rect.Height;
 	}
 }

@@ -37,5 +37,5 @@ public abstract class Shape : IDrawable
 
 	protected abstract void DrawFill();
 	protected abstract void DrawEdge();
-	public abstract    bool Contains(Vector2 point);
+	public abstract    bool Contains(Vector2 testPoint);
 }

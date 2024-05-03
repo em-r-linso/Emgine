@@ -1,3 +1,4 @@
+using System.Numerics;
 using EmgineCore;
 using Raylib_cs;
 using Rectangle = EmgineCore.Rectangle;
@@ -8,20 +9,21 @@ public class MainState : GameState
 {
 	protected override void OnEnter()
 	{
-		// var triangle = new Polygon(new Vector2[]
-		// 						   {
-		// 							   new(-500, 0),
-		// 							   new(0, 0),
-		// 							   new(0, -500),
-		// 						   },
-		// 						   Color.Red,
-		// 						   Color.Red);
+		var triangle = new Polygon(new Vector2[]
+								   {
+									   new(-500, 0),
+									   new(0, 0),
+									   new(0, -500)
+								   },
+								   Color.Blue,
+								   Color.White);
 		// AddDrawable(triangle);
 
 		var clickableThingA = new ClickableThing(new Rectangle(0, 0, 50, 50, Color.Green, Color.White, 100));
 		AddDrawable(clickableThingA.MouseableArea);
 		AddMouseable(clickableThingA);
-		var clickableThingB = new ClickableThing(new Rectangle(-25, -25, 50, 50, Color.Blue, Color.White, 10));
+		// var clickableThingB = new ClickableThing(new Rectangle(-25, -25, 50, 50, Color.Blue, Color.White, 10));
+		var clickableThingB = new ClickableThing(triangle);
 		AddDrawable(clickableThingB.MouseableArea);
 		AddMouseable(clickableThingB);
 
