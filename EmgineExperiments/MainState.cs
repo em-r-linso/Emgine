@@ -27,18 +27,18 @@ public class MainState : GameState
 		AddDrawable(clickableThingB.MouseableArea);
 		AddMouseable(clickableThingB);
 
-		// var wiggler = new Wiggler(new Vector2[]
-		// 						  {
-		// 							  new(-100, 100), // bottom left
-		// 							  new(100, 100), // bottom right
-		// 							  new(100, -100), // top right
-		// 							  new(-100, -100), // top left
-		// 						  },
-		// 						  Color.Blue,
-		// 						  Color.Blue,
-		// 						  -100);
-		// AddDrawable(wiggler);
-		// AddUpdatable(wiggler);
+		var wiggler = new Wiggler(new Vector2[]
+								  {
+									  new(-100, 100), // bottom left
+									  new(100, 100), // bottom right
+									  new(100, -100), // top right
+									  new(-100, -100), // top left
+								  },
+								  Color.Blue,
+								  Color.Blue,
+								  -100);
+		AddDrawable(wiggler);
+		AddUpdatable(wiggler);
 
 		// var text = new Text("Hello, world!", new(-100,-100), color: Color.White, drawOrder: 100);
 		// AddDrawable(text);

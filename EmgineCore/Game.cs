@@ -25,8 +25,10 @@ public class Game
 
 		while (!Raylib.WindowShouldClose())
 		{
+			var deltaTime = Raylib.GetFrameTime();
+			
 			HandleEvents();
-			OnUpdate();
+			OnUpdate(deltaTime);
 			OnDraw();
 		}
 
@@ -62,11 +64,11 @@ public class Game
 		Raylib.EndDrawing();
 	}
 
-	void OnUpdate()
+	void OnUpdate(float deltaTime)
 	{
 		foreach (var updatable in GameStateManager.Updatables)
 		{
-			updatable.Update();
+			updatable.Update(deltaTime);
 		}
 	}
 
