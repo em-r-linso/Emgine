@@ -36,10 +36,10 @@ public class Polygon : Shape
 
 			// We will imagine an infinite horizontal line at the height of our testPoint.
 
-			// If the edge is horizontal, it will not intersect the test point.
+			// If the edge is horizontal, this is a lot simpler.
 			if (point1.Y == point2.Y)
 			{
-				continue;
+				return point1.Y == testPoint.Y;
 			}
 
 			// Our imaginary line must be vertically between this edge's two points for it to intersect.
