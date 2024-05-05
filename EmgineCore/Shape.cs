@@ -26,9 +26,9 @@ public class Shape : IDrawable
 		Points = points.Append(points[0]).ToArray();
 	}
 
-	protected Vector2[] Points       { get; }
-	public    int       DrawOrder    { get; set; }
-	public    float     CameraWeight { get; set; }
+	public Vector2[] Points       { get; }
+	public int       DrawOrder    { get; set; }
+	public float     CameraWeight { get; set; }
 
 	public void Draw()
 	{
@@ -66,10 +66,15 @@ public class Shape : IDrawable
 
 			// We will imagine an infinite horizontal line at the height of our testPoint.
 
-			// If the edge is horizontal, this is a lot simpler.
+			// If the edge is horizontal, this is a lot simpler—just check if the test point is on the edge.
 			if (point1.Y == point2.Y)
 			{
-				return point1.Y == testPoint.Y;
+				if (point1.Y == testPoint.Y)
+				{
+					intersections++;
+				}
+
+				continue;
 			}
 
 			// Our imaginary line must be vertically between this edge's two points for it to intersect.
