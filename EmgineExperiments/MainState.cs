@@ -23,58 +23,74 @@ public class MainState : GameState
 		// AddDrawable(clickableThingB.MouseableArea);
 		// AddMouseable(clickableThingB);
 
+		// var uiThing1 = new UIThing(
+		// 						   new Wiggler(new Vector2[]
+		// 									   {
+		// 										   new(-10, 30),  // bottom left
+		// 										   new(120, 30),  // bottom right
+		// 										   new(120, -10), // top right
+		// 										   new(-10, -10)  // top left
+		// 									   },
+		// 									   Color.SkyBlue,
+		// 									   drawOrder: -100,
+		// 									   wiggleLimit: 5,
+		// 									   wiggleSpeed: 20),
+		// 						   new("Continue", new(0, 0), color: Color.White, drawOrder: 100));
+		// AddDrawable(uiThing1.MouseableArea);
+		// AddDrawable(uiThing1.Text);
+		// AddUpdatable((Wiggler)uiThing1.MouseableArea);
+		// AddMouseable(uiThing1);
+		//
+		// var uiThing2 = new UIThing(
+		// 						   new Wiggler(new Vector2[]
+		// 									   {
+		// 										   new(-10, 30  + 50), // bottom left
+		// 										   new(120, 30  + 50), // bottom right
+		// 										   new(120, -10 + 50), // top right
+		// 										   new(-10, -10 + 50)  // top left
+		// 									   },
+		// 									   Color.SkyBlue,
+		// 									   drawOrder: -100,
+		// 									   wiggleLimit: 5,
+		// 									   wiggleSpeed: 20),
+		// 						   new("New Game", new(0, 0 + 50), color: Color.White, drawOrder: 100));
+		// AddDrawable(uiThing2.MouseableArea);
+		// AddDrawable(uiThing2.Text);
+		// AddUpdatable((Wiggler)uiThing2.MouseableArea);
+		// AddMouseable(uiThing2);
+		//
+		// var uiThing3 = new UIThing(
+		// 						   new Wiggler(new Vector2[]
+		// 									   {
+		// 										   new(-10, 30  + 100), // bottom left
+		// 										   new(120, 30  + 100), // bottom right
+		// 										   new(120, -10 + 100), // top right
+		// 										   new(-10, -10 + 100)  // top left
+		// 									   },
+		// 									   Color.SkyBlue,
+		// 									   drawOrder: -100,
+		// 									   wiggleLimit: 5,
+		// 									   wiggleSpeed: 20),
+		// 						   new("Options", new(0, 0 + 100), color: Color.White, drawOrder: 100));
+		// AddDrawable(uiThing3.MouseableArea);
+		// AddDrawable(uiThing3.Text);
+		// AddUpdatable((Wiggler)uiThing3.MouseableArea);
+		// AddMouseable(uiThing3);
+
 		var uiThing1 = new UIThing(
-								   new Wiggler(new Vector2[]
-											   {
-												   new(-10, 30),  // bottom left
-												   new(120, 30),  // bottom right
-												   new(120, -10), // top right
-												   new(-10, -10)  // top left
-											   },
-											   Color.SkyBlue,
-											   drawOrder: -100,
-											   wiggleLimit: 5,
-											   wiggleSpeed: 20),
-								   new("Continue", new(0, 0), color: Color.White, drawOrder: 100));
-		AddDrawable(uiThing1.MouseableArea);
-		AddDrawable(uiThing1.Text);
-		AddUpdatable((Wiggler)uiThing1.MouseableArea);
+								   new Vector2[]
+								   {
+									   new(-10, 30),  // bottom left
+									   new(120, 30),  // bottom right
+									   new(120, -10), // top right
+									   new(-10, -10)  // top left
+								   },
+								   Color.SkyBlue,
+								   fillColorHover: Color.Pink,
+								   edgeColorHover: Color.White
+								  );
 		AddMouseable(uiThing1);
-
-		var uiThing2 = new UIThing(
-								   new Wiggler(new Vector2[]
-											   {
-												   new(-10, 30  + 50), // bottom left
-												   new(120, 30  + 50), // bottom right
-												   new(120, -10 + 50), // top right
-												   new(-10, -10 + 50)  // top left
-											   },
-											   Color.SkyBlue,
-											   drawOrder: -100,
-											   wiggleLimit: 5,
-											   wiggleSpeed: 20),
-								   new("New Game", new(0, 0 + 50), color: Color.White, drawOrder: 100));
-		AddDrawable(uiThing2.MouseableArea);
-		AddDrawable(uiThing2.Text);
-		AddUpdatable((Wiggler)uiThing2.MouseableArea);
-		AddMouseable(uiThing2);
-
-		var uiThing3 = new UIThing(
-								   new Wiggler(new Vector2[]
-											   {
-												   new(-10, 30  + 100), // bottom left
-												   new(120, 30  + 100), // bottom right
-												   new(120, -10 + 100), // top right
-												   new(-10, -10 + 100)  // top left
-											   },
-											   Color.SkyBlue,
-											   drawOrder: -100,
-											   wiggleLimit: 5,
-											   wiggleSpeed: 20),
-								   new("Options", new(0, 0 + 100), color: Color.White, drawOrder: 100));
-		AddDrawable(uiThing3.MouseableArea);
-		AddDrawable(uiThing3.Text);
-		AddUpdatable((Wiggler)uiThing3.MouseableArea);
-		AddMouseable(uiThing3);
+		AddDrawable(uiThing1.VisualArea);
+		AddUpdatable(uiThing1.VisualArea);
 	}
 }

@@ -6,13 +6,19 @@ namespace EmgineExperiments;
 
 public class Wiggler : Shape, IUpdatable
 {
-	public Wiggler(IReadOnlyList<Vector2> points, Color? fillColor = null, Color? edgeColor = null, int drawOrder = 0, float wiggleLimit = 10, float wiggleSpeed = 100)
-		: base(points, fillColor, edgeColor, drawOrder)
+	public Wiggler(IReadOnlyList<Vector2> points,
+				   Color?                 fillColor    = null,
+				   Color?                 edgeColor    = null,
+				   int                    drawOrder    = 0,
+				   float                  wiggleLimit  = 10,
+				   float                  wiggleSpeed  = 100,
+				   float                  cameraWeight = 1)
+		: base(points, fillColor, edgeColor, drawOrder, cameraWeight)
 	{
 		OriginalPoints = Points.ToArray();
-		WiggleLimit = wiggleLimit;
-		WiggleSpeed = wiggleSpeed;
-		
+		WiggleLimit    = wiggleLimit;
+		WiggleSpeed    = wiggleSpeed;
+
 		WiggleDeltas = new Vector2[OriginalPoints.Length];
 		for (var pointIndex = 0; pointIndex < WiggleDeltas.Length; pointIndex++)
 		{
@@ -28,12 +34,10 @@ public class Wiggler : Shape, IUpdatable
 
 	public void Update(float deltaTime)
 	{
-		
 		for (var pointIndex = 0;
 			 pointIndex < Points.Length - 1; /* no need to edit final point, because it will match first point */
 			 pointIndex++)
 		{
-			
 			var point = Points[pointIndex];
 			// point = new(point.X += Raylib.GetRandomValue(-1, 1), point.Y += Raylib.GetRandomValue(-1, 1));
 			point += WiggleDeltas[pointIndex] * deltaTime * WiggleSpeed;
