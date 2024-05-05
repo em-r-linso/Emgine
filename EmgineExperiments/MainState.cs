@@ -1,7 +1,6 @@
 using System.Numerics;
 using EmgineCore;
 using Raylib_cs;
-using Rectangle = EmgineCore.Rectangle;
 
 namespace EmgineExperiments;
 
@@ -25,31 +24,30 @@ public class MainState : GameState
 		// AddMouseable(clickableThingB);
 
 		var uiThing1 = new UIThing(
-								  new Wiggler(new Vector2[]
-											  {
-												  new(-10, 30),  // bottom left
-												  new(120, 30),  // bottom right
-												  new(120, -10), // top right
-												  new(-10, -10), // top left
-											  },
-											  Color.SkyBlue,
-											  drawOrder: -100,
-											  wiggleLimit: 5,
-											  wiggleSpeed: 20),
-								  new("Continue", new(0, 0), color: Color.White, drawOrder: 100));
+								   new Wiggler(new Vector2[]
+											   {
+												   new(-10, 30),  // bottom left
+												   new(120, 30),  // bottom right
+												   new(120, -10), // top right
+												   new(-10, -10)  // top left
+											   },
+											   Color.SkyBlue,
+											   drawOrder: -100,
+											   wiggleLimit: 5,
+											   wiggleSpeed: 20),
+								   new("Continue", new(0, 0), color: Color.White, drawOrder: 100));
 		AddDrawable(uiThing1.MouseableArea);
 		AddDrawable(uiThing1.Text);
 		AddUpdatable((Wiggler)uiThing1.MouseableArea);
 		AddMouseable(uiThing1);
 
-
 		var uiThing2 = new UIThing(
 								   new Wiggler(new Vector2[]
 											   {
-												   new(-10, 30  +50),  // bottom left
+												   new(-10, 30  + 50), // bottom left
 												   new(120, 30  + 50), // bottom right
 												   new(120, -10 + 50), // top right
-												   new(-10, -10 + 50), // top left
+												   new(-10, -10 + 50)  // top left
 											   },
 											   Color.SkyBlue,
 											   drawOrder: -100,
@@ -61,14 +59,13 @@ public class MainState : GameState
 		AddUpdatable((Wiggler)uiThing2.MouseableArea);
 		AddMouseable(uiThing2);
 
-
 		var uiThing3 = new UIThing(
 								   new Wiggler(new Vector2[]
 											   {
 												   new(-10, 30  + 100), // bottom left
 												   new(120, 30  + 100), // bottom right
 												   new(120, -10 + 100), // top right
-												   new(-10, -10 + 100), // top left
+												   new(-10, -10 + 100)  // top left
 											   },
 											   Color.SkyBlue,
 											   drawOrder: -100,
@@ -79,6 +76,5 @@ public class MainState : GameState
 		AddDrawable(uiThing3.Text);
 		AddUpdatable((Wiggler)uiThing3.MouseableArea);
 		AddMouseable(uiThing3);
-		
 	}
 }

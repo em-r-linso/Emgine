@@ -4,7 +4,7 @@ using Raylib_cs;
 
 namespace EmgineExperiments;
 
-public class Wiggler : Polygon, IUpdatable
+public class Wiggler : Shape, IUpdatable
 {
 	public Wiggler(IReadOnlyList<Vector2> points, Color? fillColor = null, Color? edgeColor = null, int drawOrder = 0, float wiggleLimit = 10, float wiggleSpeed = 100)
 		: base(points, fillColor, edgeColor, drawOrder)
