@@ -5,6 +5,7 @@ obj/
 # IntelliJ
 .idea/
 *.DotSettings.user
+global.json
 
 # NuGet
 *.nupkg
