@@ -7,16 +7,23 @@ namespace EmgineExperiments;
 public class UIThing : IMouseable
 {
 	public UIThing(
-		IReadOnlyList<Vector2> points,
+		string                 content,
+		Vector2? padding = null,
+		Vector2?               position          = null,
+		TextManager.Typeface?  typeface          = null,
+		int                    fontSize          = 20,
+		Color?                 color             = null,
+		int                    spacing           = 1,
+		int                    wrapWidth         = -1,
 		Color?                 fillColorNormal   = null,
 		Color?                 edgeColorNormal   = null,
 		Color?                 fillColorHover    = null,
 		Color?                 edgeColorHover    = null,
 		int                    drawOrder         = 0,
 		float                  cameraWeight      = 1,
-		int                    wiggleLimitNormal = 5,
-		int                    wiggleSpeedNormal = 20,
-		int                    wiggleLimitHover  = 12,
+		int                    wiggleLimitNormal = 3,
+		int                    wiggleSpeedNormal = 25,
+		int                    wiggleLimitHover  = 9,
 		int                    wiggleSpeedHover  = 100)
 	{
 		WiggleLimitNormal = wiggleLimitNormal;
@@ -27,20 +34,31 @@ public class UIThing : IMouseable
 		EdgeColorNormal   = edgeColorNormal;
 		FillColorHover    = fillColorHover;
 		EdgeColorHover    = edgeColorHover;
+		
+		position ??= new(0, 0);
+		Text = new(content, position, typeface, fontSize, color, spacing, wrapWidth, drawOrder);
+		padding ??= new(0, 0);
+		var points = new Vector2[]
+		{
+			new(position.Value.X - padding.Value.X, position.Value.Y + padding.Value.Y + fontSize),             // bottom left
+			new(position.Value.X + padding.Value.X + wrapWidth, position.Value.Y+padding.Value.Y + fontSize), // bottom right
+			new(position.Value.X + padding.Value.X + wrapWidth, position.Value.Y -padding.Value.Y), // top right
+			new(position.Value.X  - padding.Value.X, position.Value.Y -padding.Value.Y)              // top left
+		};
 
-		// MouseableArea = new(points, drawOrder: drawOrder, cameraWeight: cameraWeight);
-		MouseableArea = new(points.ToArray(), Color.Gold, Color.Red, drawOrder: drawOrder, cameraWeight: cameraWeight);
+		MouseableArea = new(points, drawOrder: drawOrder - 1, cameraWeight: cameraWeight);
+		// MouseableArea = new(points.ToArray(), Color.Gold, Color.Red, drawOrder, cameraWeight);
 		VisualArea = new(points.ToArray(),
 						 FillColorNormal,
 						 EdgeColorNormal,
-						 drawOrder,
+						 drawOrder - 1,
 						 wiggleLimitNormal,
 						 wiggleSpeedNormal,
 						 cameraWeight);
-		
 	}
 
 	public Wiggler VisualArea { get; set; }
+	public Text    Text       { get; set; }
 
 	int    WiggleLimitNormal { get; }
 	int    WiggleSpeedNormal { get; }

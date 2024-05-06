@@ -77,20 +77,36 @@ public class MainState : GameState
 		// AddUpdatable((Wiggler)uiThing3.MouseableArea);
 		// AddMouseable(uiThing3);
 
-		var uiThing1 = new UIThing(
-								   new Vector2[]
-								   {
-									   new(-10, 30),  // bottom left
-									   new(120, 30),  // bottom right
-									   new(120, -10), // top right
-									   new(-10, -10)  // top left
-								   },
-								   Color.SkyBlue,
-								   fillColorHover: Color.Pink,
-								   edgeColorHover: Color.White
-								  );
-		AddMouseable(uiThing1);
-		AddDrawable(uiThing1.VisualArea);
-		AddUpdatable(uiThing1.VisualArea);
+		// var uiThing1 = new UIThing(
+		// 						   "Test",
+		// 						   position: new(0, 0),
+		// 						   padding: new(20, 10),
+		// 						   wrapWidth: 100,
+		// 						   fillColorNormal: Color.SkyBlue,
+		// 						   fillColorHover: Color.Pink,
+		// 						   edgeColorHover: Color.White
+		// 						  );
+		// AddMouseable(uiThing1);
+		// AddDrawable(uiThing1.VisualArea);
+		// AddDrawable(uiThing1.Text);
+		// AddUpdatable(uiThing1.VisualArea);
+
+		string[] uiElements = ["Test", "Test2", "Test3"];
+		for (var i = 0; i < uiElements.Length; i++)
+		{
+			var uiThing = new UIThing(
+									   uiElements[i],
+									   position: new(10 * i, 50 * i),
+									   padding: new(20, 10),
+									   wrapWidth: 100,
+									   fillColorNormal: Color.SkyBlue,
+									   fillColorHover: Color.Pink,
+									   edgeColorHover: Color.White
+									  );
+			AddMouseable(uiThing);
+			AddDrawable(uiThing.VisualArea);
+			AddDrawable(uiThing.Text);
+			AddUpdatable(uiThing.VisualArea);
+		}
 	}
 }
