@@ -37,8 +37,10 @@ public class Game
 
 	void OnLoad()
 	{
+		Raylib.SetConfigFlags(ConfigFlags.Msaa4xHint);
+		Raylib.SetConfigFlags(ConfigFlags.VSyncHint);
+		Raylib.SetConfigFlags(ConfigFlags.ResizableWindow);
 		Raylib.InitWindow((int)WindowSize.X, (int)WindowSize.Y, WindowName);
-		Raylib.SetWindowState(ConfigFlags.ResizableWindow);
 		Raylib.SetTargetFPS(Raylib.GetMonitorRefreshRate(Raylib.GetCurrentMonitor()));
 
 		Camera = new();
