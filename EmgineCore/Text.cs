@@ -9,7 +9,7 @@ public class Text : IDisposable, IDrawable
 				Vector2?              position  = null,
 				TextManager.Typeface? typeface  = null,
 				int                   fontSize  = 20,
-				Color?                color     = null,
+				Color?                fontColor = null,
 				int                   spacing   = 1,
 				int                   wrapWidth = -1,
 				int                   drawOrder = 0)
@@ -18,7 +18,7 @@ public class Text : IDisposable, IDrawable
 		Position  = position ?? new(0, 0);
 		Typeface  = typeface ?? TextManager.DEFAULT_TYPEFACE;
 		FontSize  = fontSize;
-		Color     = color ?? Color.Black;
+		FontColor = fontColor;
 		Spacing   = spacing;
 		WrapWidth = wrapWidth;
 		DrawOrder = drawOrder;
@@ -39,12 +39,12 @@ public class Text : IDisposable, IDrawable
 	Vector2              Position   { get; }
 	TextManager.Typeface Typeface   { get; }
 	int                  FontSize   { get; }
-	Color                Color      { get; }
+	public Color?        FontColor  { get; set; }
 	int                  Spacing    { get; }
 	int                  WrapWidth  { get; }
 	Font                 Font       { get; }
 	float                LineHeight { get; set; }
-	List<string>         Lines      { get; } = new();
+	List<string>         Lines      { get; } = [];
 
 	public void Dispose()
 	{
@@ -60,7 +60,7 @@ public class Text : IDisposable, IDrawable
 		var linePosition = Position;
 		foreach (var line in Lines)
 		{
-			Raylib.DrawTextEx(Font, line, linePosition, Font.BaseSize, Spacing, Color);
+			Raylib.DrawTextEx(Font, line, linePosition, Font.BaseSize, Spacing, FontColor ?? Color.Black);
 			linePosition.Y += LineHeight;
 		}
 	}

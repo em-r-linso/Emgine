@@ -1,4 +1,3 @@
-using System.Numerics;
 using EmgineCore;
 using Raylib_cs;
 
@@ -95,14 +94,16 @@ public class MainState : GameState
 		for (var i = 0; i < uiElements.Length; i++)
 		{
 			var uiThing = new UIThing(
-									   uiElements[i],
-									   position: new(10 * i, 50 * i),
-									   padding: new(20, 10),
-									   wrapWidth: 100,
-									   fillColorNormal: Color.SkyBlue,
-									   fillColorHover: Color.Pink,
-									   edgeColorHover: Color.White
-									  );
+									  uiElements[i],
+									  typeface: TextManager.Typeface.MontserratBold,
+									  position: new(10 * i, 50 * i),
+									  padding: new(20, 10),
+									  wrapWidth: 100,
+									  fillColorNormal: Color.SkyBlue,
+									  fillColorHover: Color.Pink,
+									  fontColorNormal: Color.DarkGray,
+									  fontColorHover: Color.Black
+									 );
 			AddMouseable(uiThing);
 			AddDrawable(uiThing.VisualArea);
 			AddDrawable(uiThing.Text);
