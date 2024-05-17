@@ -42,5 +42,6 @@ public class MainState : GameState
 		AddDrawable(character.VisualArea);
 		AddDrawable(character.Text);
 		AddUpdatable(character.VisualArea);
+		AddUpdatable(character);
 	}
 }

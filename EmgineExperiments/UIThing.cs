@@ -63,9 +63,9 @@ public class UIThing : IMouseable
 						 wiggleSpeedNormal,
 						 wiggleVarianceNormal,
 						 cameraWeight);
-
+		Text = new(content, Position, typeface, fontSize, FontColorNormal, spacing, wrapWidth, drawOrder);
+		
 		Position = position ?? new(0, 0);
-		Text     = new(content, Position, typeface, fontSize, FontColorNormal, spacing, wrapWidth, drawOrder);
 	}
 
 	public Wiggler VisualArea { get; set; }
@@ -92,6 +92,7 @@ public class UIThing : IMouseable
 			_position              = value;
 			MouseableArea.Position = value;
 			VisualArea.Position    = value;
+			Text.Position          = value;
 		}
 	}
 

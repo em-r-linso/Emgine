@@ -36,7 +36,7 @@ public class Text : IDisposable, IDrawable
 	}
 
 	string               Content    { get; }
-	Vector2              Position   { get; }
+	public Vector2       Position   { get; set; }
 	TextManager.Typeface Typeface   { get; }
 	int                  FontSize   { get; }
 	public Color?        FontColor  { get; set; }

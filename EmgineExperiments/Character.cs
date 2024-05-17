@@ -53,6 +53,6 @@ public class Character : UIThing, IUpdatable
 
 	public void Update(float deltaTime)
 	{
-		Position += new Vector2(100, 1);
+		Position += new Vector2(10 * deltaTime, 0);
 	}
 }
