@@ -83,6 +83,12 @@ public class Shape : IDrawable
 
 			// We will imagine an infinite horizontal line at the height of our testPoint.
 
+			// Our imaginary line must be vertically between this edge's two points for it to intersect.
+			if (point1.Y > testPoint.Y == point2.Y > testPoint.Y)
+			{
+				continue;
+			}
+
 			// If the edge is horizontal, this is a lot simpler—just check if the test point is on the edge.
 			if (point1.Y == point2.Y)
 			{
@@ -91,12 +97,6 @@ public class Shape : IDrawable
 					intersections++;
 				}
 
-				continue;
-			}
-
-			// Our imaginary line must be vertically between this edge's two points for it to intersect.
-			if (point1.Y > testPoint.Y == point2.Y > testPoint.Y)
-			{
 				continue;
 			}
 
