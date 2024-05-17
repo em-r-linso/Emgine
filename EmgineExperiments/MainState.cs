@@ -28,7 +28,7 @@ public class MainState : GameState
 		}
 
 		var character = new Character(
-									  "a",
+									  "aaaaaaaaaa",
 									  typeface: TextManager.Typeface.MontserratBold,
 									  position: new(-100, -100),
 									  padding: new(20, 10),

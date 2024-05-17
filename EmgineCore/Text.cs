@@ -27,6 +27,7 @@ public class Text : IDisposable, IDrawable
 
 		if (WrapWidth == -1)
 		{
+			WrapWidth = (int)Raylib.MeasureTextEx(Font, Content, Font.BaseSize, Spacing).X;
 			Lines.Add(Content);
 		}
 		else
@@ -41,7 +42,7 @@ public class Text : IDisposable, IDrawable
 	int                  FontSize   { get; }
 	public Color?        FontColor  { get; set; }
 	int                  Spacing    { get; }
-	int                  WrapWidth  { get; }
+	public int           WrapWidth  { get; }
 	Font                 Font       { get; }
 	float                LineHeight { get; set; }
 	List<string>         Lines      { get; } = [];

@@ -43,14 +43,16 @@ public class UIThing : IMouseable
 		EdgeColorHover       = edgeColorHover;
 		FontColorNormal      = fontColorNormal;
 		FontColorHover       = fontColorHover;
+		
+		Text = new(content, Position, typeface, fontSize, FontColorNormal, spacing, wrapWidth, drawOrder);
 
 		padding ??= new(0, 0);
 		var points = new Vector2[]
 		{
 			new(0 - padding.Value.X, 0 + padding.Value.Y + fontSize), // bottom left
-			new(0 + padding.Value.X + wrapWidth,
+			new(0 + padding.Value.X + Text.WrapWidth,
 				0 + padding.Value.Y + fontSize),                          // bottom right
-			new(0 + padding.Value.X    + wrapWidth, 0 - padding.Value.Y), // top right
+			new(0 + padding.Value.X    + Text.WrapWidth, 0 - padding.Value.Y), // top right
 			new(0 - padding.Value.X, 0 - padding.Value.Y)                 // top left
 		};
 		MouseableArea = new(points, drawOrder: drawOrder - 1, cameraWeight: cameraWeight);
@@ -63,7 +65,6 @@ public class UIThing : IMouseable
 						 wiggleSpeedNormal,
 						 wiggleVarianceNormal,
 						 cameraWeight);
-		Text = new(content, Position, typeface, fontSize, FontColorNormal, spacing, wrapWidth, drawOrder);
 		
 		Position = position ?? new(0, 0);
 	}
