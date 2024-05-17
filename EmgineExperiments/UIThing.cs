@@ -6,6 +6,8 @@ namespace EmgineExperiments;
 
 public class UIThing : IMouseable
 {
+	Vector2 _position;
+
 	public UIThing(
 		string                content,
 		Vector2?              padding              = null,
@@ -42,20 +44,18 @@ public class UIThing : IMouseable
 		FontColorNormal      = fontColorNormal;
 		FontColorHover       = fontColorHover;
 
-		position ??= new(0, 0);
-		Text     =   new(content, position, typeface, fontSize, FontColorNormal, spacing, wrapWidth, drawOrder);
-		padding  ??= new(0, 0);
+		padding ??= new(0, 0);
 		var points = new Vector2[]
 		{
-			new(position.Value.X - padding.Value.X, position.Value.Y + padding.Value.Y + fontSize), // bottom left
-			new(position.Value.X + padding.Value.X + wrapWidth,
-				position.Value.Y + padding.Value.Y + fontSize), // bottom right
-			new(position.Value.X + padding.Value.X + wrapWidth, position.Value.Y - padding.Value.Y), // top right
-			new(position.Value.X - padding.Value.X, position.Value.Y - padding.Value.Y) // top left
+			new(0 - padding.Value.X, 0 + padding.Value.Y + fontSize), // bottom left
+			new(0 + padding.Value.X + wrapWidth,
+				0 + padding.Value.Y + fontSize),                          // bottom right
+			new(0 + padding.Value.X    + wrapWidth, 0 - padding.Value.Y), // top right
+			new(0 - padding.Value.X, 0 - padding.Value.Y)                 // top left
 		};
-
 		MouseableArea = new(points, drawOrder: drawOrder - 1, cameraWeight: cameraWeight);
 		VisualArea = new(points.ToArray(),
+						 Position,
 						 FillColorNormal,
 						 EdgeColorNormal,
 						 drawOrder - 1,
@@ -63,6 +63,9 @@ public class UIThing : IMouseable
 						 wiggleSpeedNormal,
 						 wiggleVarianceNormal,
 						 cameraWeight);
+
+		Position = position ?? new(0, 0);
+		Text     = new(content, Position, typeface, fontSize, FontColorNormal, spacing, wrapWidth, drawOrder);
 	}
 
 	public Wiggler VisualArea { get; set; }
@@ -80,6 +83,17 @@ public class UIThing : IMouseable
 	Color? FillColorHover       { get; }
 	Color? EdgeColorHover       { get; }
 	Color? FontColorHover       { get; }
+
+	protected Vector2 Position
+	{
+		get => _position;
+		set
+		{
+			_position              = value;
+			MouseableArea.Position = value;
+			VisualArea.Position    = value;
+		}
+	}
 
 	public Shape MouseableArea { get; set; }
 

@@ -9,10 +9,12 @@ namespace EmgineCore;
 /// </summary>
 public class Shape : IDrawable
 {
+	Vector2       _position;
 	public Color? EdgeColor;
 	public Color? FillColor;
 
 	public Shape(IReadOnlyList<Vector2> points,
+				 Vector2?               position     = null,
 				 Color?                 fillColor    = null,
 				 Color?                 edgeColor    = null,
 				 int                    drawOrder    = 0,
@@ -23,12 +25,27 @@ public class Shape : IDrawable
 		DrawOrder    = drawOrder;
 		CameraWeight = cameraWeight;
 
-		Points = points.Append(points[0]).ToArray();
+		// The order of these lines is important, because changing the Position will regenerate OffsetPoints from Points
+		Points       = points.Append(points[0]).ToArray();
+		OffsetPoints = new Vector2[Points.Length];
+		Position     = position ?? new(0, 0);
 	}
 
-	public Vector2[] Points       { get; }
-	public int       DrawOrder    { get; set; }
-	public float     CameraWeight { get; set; }
+	public Vector2[] Points       { get; set; }
+	Vector2[]        OffsetPoints { get; set; }
+
+	public Vector2 Position
+	{
+		get => _position;
+		set
+		{
+			_position = value;
+			RegenerateOffsetPoints();
+		}
+	}
+
+	public int   DrawOrder    { get; set; }
+	public float CameraWeight { get; set; }
 
 	public void Draw()
 	{
@@ -45,12 +62,12 @@ public class Shape : IDrawable
 
 	void DrawFill()
 	{
-		Raylib.DrawTriangleFan(Points, Points.Length, FillColor!.Value);
+		Raylib.DrawTriangleFan(OffsetPoints, Points.Length, FillColor!.Value);
 	}
 
 	void DrawEdge()
 	{
-		Raylib.DrawLineStrip(Points, Points.Length, EdgeColor!.Value);
+		Raylib.DrawLineStrip(OffsetPoints, Points.Length, EdgeColor!.Value);
 	}
 
 	public bool Contains(Vector2 testPoint)
@@ -61,8 +78,8 @@ public class Shape : IDrawable
 
 		for (var edge = 0; edge < Points.Length - 1; edge++)
 		{
-			var point1 = Points[edge];
-			var point2 = Points[edge + 1];
+			var point1 = OffsetPoints[edge];
+			var point2 = OffsetPoints[edge + 1];
 
 			// We will imagine an infinite horizontal line at the height of our testPoint.
 
@@ -121,5 +138,11 @@ public class Shape : IDrawable
 	protected void WeldEndpoints()
 	{
 		Points[^1] = Points[0];
+		RegenerateOffsetPoints();
+	}
+
+	void RegenerateOffsetPoints()
+	{
+		OffsetPoints = Points.Select(point => point + Position).ToArray();
 	}
 }

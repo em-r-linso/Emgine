@@ -10,6 +10,7 @@ public class Wiggler : Shape, IUpdatable
 	///     A shape whose vertices wiggles around its original points.
 	/// </summary>
 	/// <param name="points"></param>
+	/// <param name="position"></param>
 	/// <param name="fillColor"></param>
 	/// <param name="edgeColor"></param>
 	/// <param name="drawOrder"></param>
@@ -21,6 +22,7 @@ public class Wiggler : Shape, IUpdatable
 	/// </param>
 	/// <param name="cameraWeight"></param>
 	public Wiggler(IReadOnlyList<Vector2> points,
+				   Vector2?               position       = null,
 				   Color?                 fillColor      = null,
 				   Color?                 edgeColor      = null,
 				   int                    drawOrder      = 0,
@@ -28,7 +30,7 @@ public class Wiggler : Shape, IUpdatable
 				   float                  wiggleSpeed    = 100,
 				   float                  wiggleVariance = 0.8f,
 				   float                  cameraWeight   = 1)
-		: base(points, fillColor, edgeColor, drawOrder, cameraWeight)
+		: base(points, position, fillColor, edgeColor, drawOrder, cameraWeight)
 	{
 		OriginalPoints = Points.ToArray();
 		WiggleLimit    = wiggleLimit;
